@@ -1,0 +1,31 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev src/index.ts",
+    "lint": "ts-standard",
+    "tsc": "tsc",
+    "start": "node build/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "4.17.21",
+    "@types/node-cron": "^3.0.11",
+    "prisma": "^5.14.0",
+    "ts-node-dev": "2.0.0",
+    "typescript": "5.4.5"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.14.0",
+    "cors": "^2.8.5",
+    "express": "4.19.2",
+    "financejs": "4.1.0",
+    "node-cron": "^3.0.3",
+    "puppeteer": "^22.8.0"
+  }
+}

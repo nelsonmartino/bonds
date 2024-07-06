@@ -1,0 +1,72 @@
+[
+    {
+        "name": "John",
+        "surname": "Doe",
+        "email": "john.doe@example.com",
+        "password": "johndoe123",
+        "category": "admin"
+    },
+    {
+        "name": "Jane",
+        "surname": "Smith",
+        "email": "jane.smith@example.com",
+        "password": "janesmith456",
+        "category": "user"
+    },
+    {
+        "name": "Michael",
+        "surname": "Johnson",
+        "email": "michael.johnson@example.com",
+        "password": "michaeljohnson789",
+        "category": "user"
+    },
+    {
+        "name": "Emily",
+        "surname": "Davis",
+        "email": "emily.davis@example.com",
+        "password": "emilydavis123",
+        "category": "user"
+    },
+    {
+        "name": "David",
+        "surname": "Wilson",
+        "email": "david.wilson@example.com",
+        "password": "davidwilson456",
+        "category": "user"
+    },
+    {
+        "name": "Sarah",
+        "surname": "Thomas",
+        "email": "sarah.thomas@example.com",
+        "password": "sarahthomas789",
+        "category": "user"
+    },
+    {
+        "name": "Matthew",
+        "surname": "Taylor",
+        "email": "matthew.taylor@example.com",
+        "password": "matthewtaylor123",
+        "category": "user"
+    },
+    {
+        "name": "Olivia",
+        "surname": "Anderson",
+        "email": "olivia.anderson@example.com",
+        "password": "oliviaanderson456",
+        "category": "user"
+    },
+    {
+        "name": "Christopher",
+        "surname": "Jackson",
+        "email": "christopher.jackson@example.com",
+        "password": "christopherjackson789",
+        "category": "user"
+    },
+    {
+        "name": "Ava",
+        "surname": "White",
+        "email": "ava.white@example.com",
+        "password": "avawhite123",
+        "category": "user"
+    }
+]
