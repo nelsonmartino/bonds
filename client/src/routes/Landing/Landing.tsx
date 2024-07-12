@@ -17,7 +17,12 @@ function Landing() {
   }, [dispatch])
   return (
     <>
-      <Link to={'/bonds'}>Go to bonds view</Link>
+      <Link
+        to={'/bonds/list'}
+        className="flex flex-row justify-center text-3xl font-semibold pt-20"
+      >
+        Calculadora de bonos para inversores
+      </Link>
     </>
   )
 }

@@ -6,24 +6,49 @@ import { store } from './redux/store'
 // import Root from './routes/root'
 // import Contact from './routes/contact'
 import ErrorPage from './errorPage'
-import { Landing, Bonds, Detail } from './routes'
+import { Bonds, Detail } from './routes'
 import { NavBar } from './components'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
 
 const router = createBrowserRouter([
+  // {
+  //   path: '/',
+  //   element: <Landing />,
+  //   errorElement: <ErrorPage />,
+  // },
+  // {
+  //   path: '/bonds',
+  //   element: <NavBar />,
+  //   children: [
+  //     {
+  //       path: '/bonds/list',
+  //       element: <Bonds />,
+  //     },
+  //     {
+  //       path: '/bonds/:tickerUSD',
+  //       element: <Detail />,
+  //     },
+  //   ],
+  // },
   {
     path: '/',
-    element: <Landing />,
+    element: <NavBar />,
     errorElement: <ErrorPage />,
-  },
-  {
-    path: '/bonds',
-    element: [<NavBar />, <Bonds />],
-  },
-  {
-    path: '/bonds/:tickerUSD',
-    element: [<NavBar />, <Detail />],
+    children: [
+      // {
+      //   path: '/bonds',
+      //   element: <Landing />,
+      // },
+      {
+        path: '/bonds/list',
+        element: <Bonds />,
+      },
+      {
+        path: '/bonds/:tickerUSD',
+        element: <Detail />,
+      },
+    ],
   },
 ])
 
