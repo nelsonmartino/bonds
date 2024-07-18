@@ -18,7 +18,7 @@ function Landing() {
   return (
     <>
       <Link
-        to={'/bonds/list'}
+        to={'/bonds'}
         className="flex flex-row justify-center text-3xl font-semibold pt-20"
       >
         Calculadora de bonos para inversores

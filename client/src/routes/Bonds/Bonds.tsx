@@ -32,7 +32,7 @@ function Bonds() {
         accessorKey: 'tickerARG', //simple recommended way to define a column
         header: 'Ticker $',
         Cell: ({ row }) => (
-          <Link to={`/bonds/${row.original.tickerARG}`}>
+          <Link to={`/bonds/${row.original.tickerUSD}`}>
             {row.original.tickerARG}
           </Link>
         ),

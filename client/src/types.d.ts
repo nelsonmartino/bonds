@@ -1,6 +1,7 @@
 export interface Bond {
   tickerUSD: string
   tickerARG: string
+  category: string
   dates: Date[]
   amortization: number[]
   interests: number[]
@@ -9,4 +10,6 @@ export interface Bond {
   priceARG: number
   change: number
   currentTir: number
+  duration: number
+  modifiedDuration: number
 }

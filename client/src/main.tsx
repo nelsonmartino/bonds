@@ -10,36 +10,18 @@ import { Bonds, Detail } from './routes'
 import { NavBar } from './components'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
+import List from './routes/List/List'
 
 const router = createBrowserRouter([
-  // {
-  //   path: '/',
-  //   element: <Landing />,
-  //   errorElement: <ErrorPage />,
-  // },
-  // {
-  //   path: '/bonds',
-  //   element: <NavBar />,
-  //   children: [
-  //     {
-  //       path: '/bonds/list',
-  //       element: <Bonds />,
-  //     },
-  //     {
-  //       path: '/bonds/:tickerUSD',
-  //       element: <Detail />,
-  //     },
-  //   ],
-  // },
   {
     path: '/',
     element: <NavBar />,
     errorElement: <ErrorPage />,
     children: [
-      // {
-      //   path: '/bonds',
-      //   element: <Landing />,
-      // },
+      {
+        path: '/bonds',
+        element: <List />,
+      },
       {
         path: '/bonds/list',
         element: <Bonds />,

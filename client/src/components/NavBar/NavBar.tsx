@@ -8,16 +8,16 @@ function NavBar() {
   return (
     <>
       <div className="flex flex-row rounded-lg justify-between bg-blue-300 border-2 border-blue-500 p-4">
-        {location.pathname !== '/bonds/list' && (
-          <Link className="font-bold hover:text-blue-500" to={'/bonds/list'}>
+        {location.pathname !== '/bonds' && (
+          <Link className="font-bold hover:text-blue-500" to={'/bonds'}>
             BonArg
           </Link>
         )}
-        {location.pathname === '/bonds/list' && (
+        {location.pathname === '/bonds' && (
           <div className="font-bold">BonArg</div>
         )}
         <div className="flex flex-row justify-between font-semibold">
-          <Link to={'/bonds/list'} className="hover:text-blue-500">
+          <Link to={'/bonds'} className="hover:text-blue-500">
             Bonos
           </Link>
           <Link to={'/register'} className="hover:text-blue-500 px-6">
