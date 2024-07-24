@@ -10,7 +10,7 @@ import cron from 'node-cron'
 
 const prisma = new PrismaClient()
 
-const bondsJson: BondJson[] = bondsEntries
+const bondsJson: BondJson[] = bondsEntries as BondJson[]
 
 export const getBonds = async () => {
   const bonds = await prisma.bond.findMany()
@@ -47,6 +47,8 @@ export const loadBonds = async () => {
       tickerUSD,
       tickerARG,
       category,
+      emitter,
+      description,
       dates,
       amortization,
       interests,
@@ -56,16 +58,24 @@ export const loadBonds = async () => {
       currentTir,
       duration,
       modifiedDuration,
+      parity,
     } = bond
     const formatedDates = dates.map((date) => {
       const formatedDate = new Date(date)
       return formatedDate
     })
-    const newCashflow = setCashflow({ ...bond, dates: formatedDates })
+    const newCashflow = setCashflow({
+      ...bond,
+      dates: formatedDates,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
     return {
       tickerUSD,
       tickerARG,
       category,
+      emitter,
+      description,
       dates: formatedDates,
       amortization,
       interests,
@@ -76,6 +86,7 @@ export const loadBonds = async () => {
       currentTir,
       duration,
       modifiedDuration,
+      parity,
     }
   })
   const createBonds = await prisma.bond.createMany({ data: formatedBonds })
@@ -84,7 +95,7 @@ export const loadBonds = async () => {
 }
 
 cron.schedule('0,30 10-16 * * 1-5', async () => {
-  // cron.schedule('*/1 * * * 1-5', async () => {
+  // cron.schedule('*/2 * * * 1-5', async () => {
   const bonds = await getBonds()
 
   const updatedPriceBonds = await getCurrentPrice(bonds)

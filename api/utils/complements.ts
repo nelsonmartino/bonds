@@ -146,6 +146,29 @@ export const getTPlusTir = async (bonds: Bond[], plus: number) => {
 
     bond.change = Number((bond.priceARG / bond.priceUSD).toFixed(2))
 
+    // Calculate parity
+
+    const pastAmortization = bond.amortization.slice(
+      0,
+      dates.length - activeDates.length
+    )
+
+    const resValue =
+      bond.amortization.reduce((accu, x) => x + accu) -
+      pastAmortization.reduce((accu, x) => x + accu, 0)
+
+    const dirtyPrice =
+      resValue *
+      (1 +
+        ((dateDiff360(dates[dates.length - activeDates.length], tPlusDate) /
+          360) *
+          bond.interests[dates.length - activeDates.length]) /
+          100)
+
+    bond.parity = Number(((priceUSD / dirtyPrice) * 100).toFixed(2))
+
+    bond.updatedAt = new Date()
+
     return bond
   })
   return updatedBonds

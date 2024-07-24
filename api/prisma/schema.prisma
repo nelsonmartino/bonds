@@ -4,6 +4,9 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// luego de cada modificación ejecutar
+// npx prisma migrate dev --name init
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -26,7 +29,9 @@ model User {
 model Bond {
   tickerUSD String @id
   tickerARG String @unique
-  category  String
+  category  Category
+  emitter Emitter
+  description String
   dates DateTime[]
   amortization  Float[]
   interests Float[]
@@ -37,7 +42,11 @@ model Bond {
   currentTir  Float
   duration  Float
   modifiedDuration  Float
+  parity Float
   portfolios  Portfolio[]
+  createdAt DateTime  @default(now())
+  // updatedAt DateTime @updatedAt
+  updatedAt DateTime
 }
 
 model Portfolio {
@@ -56,4 +65,16 @@ model Holiday {
 enum Role {
   user
   admin
+}
+
+enum Emitter {
+  corp
+  cbank
+  treasury
+}
+
+enum Category {
+  hard
+  cer
+  badlar
 }

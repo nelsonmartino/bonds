@@ -9,6 +9,7 @@ import {
 import { Bond } from '../../types'
 // import { Link, useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+// import moment from 'moment'
 
 function Bonds() {
   const { bonds: data } = useAppSelector((state) => state.bonds)
@@ -47,18 +48,27 @@ function Bonds() {
         accessorKey: 'priceARG', //simple recommended way to define a column
         header: 'Precio $',
       },
-      {
-        accessorKey: 'change', //simple recommended way to define a column
-        header: 'TC',
-      },
-      {
-        accessorKey: 'currentTir', //simple recommended way to define a column
-        header: 'TIR',
-      },
-      {
-        accessorKey: 'modifiedDuration', //simple recommended way to define a column
-        header: 'MD',
-      },
+      // {
+      //   accessorKey: 'change', //simple recommended way to define a column
+      //   header: 'TC',
+      // },
+      // {
+      //   accessorKey: 'currentTir', //simple recommended way to define a column
+      //   header: 'TIR',
+      // },
+      // {
+      //   accessorKey: 'modifiedDuration', //simple recommended way to define a column
+      //   header: 'MD',
+      // },
+      // {
+      //   accessorKey: 'updatedAt', //simple recommended way to define a column
+      //   header: 'Actualizado',
+      //   Cell: ({ row }) => (
+      //     <div>
+      //       {moment(row.original.updatedAt).startOf('minute').fromNow()}
+      //     </div>
+      //   ),
+      // },
     ],
     []
   )

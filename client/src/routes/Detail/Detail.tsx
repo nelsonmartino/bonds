@@ -56,7 +56,7 @@ function Detail() {
         accessorKey: 'date', //simple recommended way to define a column
         header: 'Fecha',
         Cell: ({ row }) => (
-          <div>{moment(row.original.date).format('DD/MM/YYYY')}</div>
+          <div>{moment.utc(row.original.date).format('DD/MM/YYYY')}</div>
         ),
       },
       {
@@ -112,6 +112,13 @@ function Detail() {
           />
           <DataCard name="Precio ARG" value={`$ ${bond?.priceARG}` || '$ 0'} />
           <DataCard name="TC" value={`${bond?.change} $/USD` || '0 $/USD'} />
+          <DataCard name="Paridad" value={`${bond?.parity} %` || '0 %'} />
+          <DataCard
+            name="Actualizado"
+            value={
+              `${moment(bond?.updatedAt).startOf('minute').fromNow()}` || ''
+            }
+          />
         </div>
         <div className="w-1/2">
           <div className="text-center text-xl font-semibold p-2 bg-blue-300 rounded-md border-2">

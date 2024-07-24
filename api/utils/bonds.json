@@ -2,7 +2,9 @@
   {
     "tickerUSD": "YMCID",
     "tickerARG": "YMCIO",
-    "category": "hardUSD",
+    "category": "hard",
+    "emitter": "corp",
+    "description": "ON EF-YPF S.A. CLASE 17",
     "dates": [
       "2021-02-12",
       "2021-06-30",
@@ -34,12 +36,15 @@
     "change": 0,
     "currentTir": 0,
     "duration": 0,
-    "modifiedDuration": 0
+    "modifiedDuration": 0,
+    "parity": 0
   },
   {
     "tickerUSD": "PECBD",
     "tickerARG": "PECBO",
-    "category": "hardUSD",
+    "category": "hard",
+    "emitter": "corp",
+    "description": "ON PETROLERA ACONCAGUA ENERGIA CLASE 11",
     "dates": [
       "2024-02-29",
       "2024-08-29",
@@ -59,12 +64,15 @@
     "change": 0,
     "currentTir": 0,
     "duration": 0,
-    "modifiedDuration": 0
+    "modifiedDuration": 0,
+    "parity": 0
   },
   {
     "tickerUSD": "IRCFD",
     "tickerARG": "IRCFO",
-    "category": "hardUSD",
+    "category": "hard",
+    "emitter": "corp",
+    "description": "ON IRSA INVERSIONES Y REPRESENTACIONES CLASE 14",
     "dates": [
       "2022-06-22",
       "2022-12-22",
@@ -90,12 +98,15 @@
     "change": 0,
     "currentTir": 0,
     "duration": 0,
-    "modifiedDuration": 0
+    "modifiedDuration": 0,
+    "parity": 0
   },
   {
     "tickerUSD": "MRCAD",
     "tickerARG": "MRCAO",
-    "category": "hardUSD",
+    "category": "hard",
+    "emitter": "corp",
+    "description": "ON COEMISIÓN GEMSA CTR CLASE 10",
     "dates": [
       "2021-12-01",
       "2022-06-01",
@@ -122,12 +133,15 @@
     "change": 0,
     "currentTir": 0,
     "duration": 0,
-    "modifiedDuration": 0
+    "modifiedDuration": 0,
+    "parity": 0
   },
   {
     "tickerUSD": "BPD7D",
     "tickerARG": "BPOD7",
-    "category": "hardUSD",
+    "category": "hard",
+    "emitter": "cbank",
+    "description": "TP BOPREAL SERIE 1D",
     "dates": [
       "2024-01-05",
       "2024-10-31",
@@ -146,12 +160,15 @@
     "change": 0,
     "currentTir": 0,
     "duration": 0,
-    "modifiedDuration": 0
+    "modifiedDuration": 0,
+    "parity": 0
   },
   {
     "tickerUSD": "BPY6D",
     "tickerARG": "BPY26",
-    "category": "hardUSD",
+    "category": "hard",
+    "emitter": "cbank",
+    "description": "TP BOPREAL SERIE 3",
     "dates": [
       "2024-03-07",
       "2024-08-31",
@@ -171,6 +188,69 @@
     "change": 0,
     "currentTir": 0,
     "duration": 0,
-    "modifiedDuration": 0
+    "modifiedDuration": 0,
+    "parity": 0
+  },
+  {
+    "tickerUSD": "AE38D",
+    "tickerARG": "AE38",
+    "category": "hard",
+    "emitter": "treasury",
+    "description": "TP BONO ESTADO NACIONAL EN DOLARES STEP UP 2038 LA",
+    "dates": [
+      "2020-09-04",
+      "2021-01-09",
+      "2021-07-09",
+      "2022-01-09",
+      "2022-07-09",
+      "2023-01-09",
+      "2023-07-09",
+      "2024-01-09",
+      "2024-07-09",
+      "2025-01-09",
+      "2025-07-09",
+      "2026-01-09",
+      "2026-07-09",
+      "2027-01-09",
+      "2027-07-09",
+      "2028-01-09",
+      "2028-07-09",
+      "2029-01-09",
+      "2029-07-09",
+      "2030-01-09",
+      "2030-07-09",
+      "2031-01-09",
+      "2031-07-09",
+      "2032-01-09",
+      "2032-07-09",
+      "2033-01-09",
+      "2033-07-09",
+      "2034-01-09",
+      "2034-07-09",
+      "2035-01-09",
+      "2035-07-09",
+      "2036-01-09",
+      "2036-07-09",
+      "2037-01-09",
+      "2037-07-09",
+      "2038-01-09"
+    ],
+    "amortization": [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4.545, 4.545, 4.545, 4.545, 4.545,
+      4.545, 4.545, 4.545, 4.545, 4.545, 4.545, 4.545, 4.545, 4.545, 4.545,
+      4.545, 4.545, 4.545, 4.545, 4.545, 4.545, 4.555
+    ],
+    "interests": [
+      0.125, 0.125, 2, 2, 3.875, 3.875, 4.25, 4.25, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+      5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5
+    ],
+    "cashflow": [],
+    "priceUSD": 42.5,
+    "priceARG": 420,
+    "change": 0,
+    "currentTir": 0,
+    "duration": 0,
+    "modifiedDuration": 0,
+    "parity": 0
   }
 ]

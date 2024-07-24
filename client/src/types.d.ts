@@ -1,7 +1,13 @@
+type Emitter = 'corp' | 'cbank' | 'treasury'
+
+type Category = 'hard' | 'cer' | 'badlar'
+
 export interface Bond {
   tickerUSD: string
   tickerARG: string
-  category: string
+  category: Category
+  emitter: Emitter
+  description: string
   dates: Date[]
   amortization: number[]
   interests: number[]
@@ -12,4 +18,7 @@ export interface Bond {
   currentTir: number
   duration: number
   modifiedDuration: number
+  parity: number
+  createdAt: Date
+  updatedAt: Date
 }
