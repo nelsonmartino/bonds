@@ -1,6 +1,6 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 // import { Link } from 'react-router-dom'
-import { useAppSelector } from '../../redux/hooks'
+// import { useAppSelector } from '../../redux/hooks'
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -8,13 +8,27 @@ import {
 } from 'material-react-table'
 import { Bond } from '../../types'
 // import { Link, useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import axios from 'axios'
 // import moment from 'moment'
 
 function Bonds() {
-  const { bonds: data } = useAppSelector((state) => state.bonds)
+  // const { bonds: data } = useAppSelector((state) => state.bonds)
 
   // const navigate = useNavigate()
+
+  const [bonds, setBonds] = useState<Bond[]>([])
+
+  const { list } = useParams()
+
+  useEffect(() => {
+    axios
+      .get<Bond[]>(`http://localhost:3001/bonds?emitter=${list}`)
+      .then(({ data }) => {
+        setBonds(data)
+      })
+      .catch((error) => console.error(error))
+  }, [list])
 
   const columns = useMemo<MRT_ColumnDef<Bond>[]>(
     () => [
@@ -22,7 +36,7 @@ function Bonds() {
         accessorKey: 'tickerUSD', //simple recommended way to define a column
         header: 'Ticker USD',
         Cell: ({ row }) => (
-          <Link to={`/bonds/${row.original.tickerUSD}`}>
+          <Link to={`/bonds/detail/${row.original.tickerUSD}`}>
             {row.original.tickerUSD}
           </Link>
         ),
@@ -33,7 +47,7 @@ function Bonds() {
         accessorKey: 'tickerARG', //simple recommended way to define a column
         header: 'Ticker $',
         Cell: ({ row }) => (
-          <Link to={`/bonds/${row.original.tickerUSD}`}>
+          <Link to={`/bonds/detail/${row.original.tickerUSD}`}>
             {row.original.tickerARG}
           </Link>
         ),
@@ -75,7 +89,7 @@ function Bonds() {
 
   const table = useMaterialReactTable({
     columns,
-    data, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    data: bonds, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     enableRowSelection: true, //enable some features
     enableColumnOrdering: true, //enable a feature for all columns
     enableGlobalFilter: true, //turn off a feature

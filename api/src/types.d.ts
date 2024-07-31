@@ -1,8 +1,8 @@
 type UserCategory = 'user' | 'admin'
 
-type Emitter = 'corp' | 'cbank' | 'treasury'
+type Emitter = 'corp' | 'cbank' | 'treasury' | 'province'
 
-type Category = 'hard' | 'cer' | 'badlar'
+type Category = 'hard' | 'cer' | 'badlar' | 'dlinked'
 
 export interface User {
   name: string
@@ -32,6 +32,20 @@ export interface Bond {
   createdAt: Date
   updatedAt: Date
 }
+
+export type BondForm = Omit<
+  Bond,
+  | 'cashflow'
+  | 'priceUSD'
+  | 'priceARG'
+  | 'change'
+  | 'currentTir'
+  | 'duration'
+  | 'modifiedDuration'
+  | 'parity'
+  | 'createdAt'
+  | 'updatedAt'
+>
 
 export interface BondJson {
   tickerUSD: string

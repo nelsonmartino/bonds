@@ -19,6 +19,7 @@ interface Cashflow {
 
 function Detail() {
   const { tickerUSD } = useParams()
+  console.log(tickerUSD)
 
   const [bond, setBond] = useState<Bond>()
   const [data, setData] = useState<Cashflow[]>([])
@@ -32,7 +33,6 @@ function Detail() {
           let amortization: number
           let interest: number
           let cash: number
-          // const formatedDate = moment(date).format('DD/MM/YYYY')
           if (index) {
             amortization = data.amortization[index - 1]
             interest = data.interests[index - 1]
@@ -45,7 +45,6 @@ function Detail() {
           return { date, amortization, interest, cash }
         })
         setData(currentCashflow)
-        console.log('hola')
       })
       .catch((error) => console.error(error))
   }, [tickerUSD])

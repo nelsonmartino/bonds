@@ -3,7 +3,6 @@ import { Landing } from '../../routes'
 
 function NavBar() {
   const location = useLocation()
-  console.log(location)
 
   return (
     <>

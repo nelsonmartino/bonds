@@ -1,6 +1,6 @@
-type Emitter = 'corp' | 'cbank' | 'treasury'
+type Emitter = 'corp' | 'cbank' | 'treasury' | 'province'
 
-type Category = 'hard' | 'cer' | 'badlar'
+type Category = 'hard' | 'cer' | 'badlar' | 'dlinked'
 
 export interface Bond {
   tickerUSD: string
@@ -21,4 +21,15 @@ export interface Bond {
   parity: number
   createdAt: Date
   updatedAt: Date
+}
+
+export interface BondErrors {
+  tickerUSD: string
+  tickerARG: string
+  category: string
+  emitter: string
+  description: string
+  dates: string
+  amortization: string
+  interests: string
 }

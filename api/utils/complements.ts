@@ -176,14 +176,17 @@ export const getTPlusTir = async (bonds: Bond[], plus: number) => {
 
 export const setCashflow = (bond: Bond) => {
   const { dates, amortization, interests } = bond
+
   const cashflow = interests.map((interest, index) => {
     const days = dateDiff360(dates[index], dates[index + 1])
+
     const restCapital = amortization
       .slice(index)
       .reduce((amort, accu) => amort + accu)
     const cashInt = (((interest / 100) * days) / 360) * restCapital
     return Number((cashInt + amortization[index]).toFixed(4))
   })
+
   return cashflow
 }
 

@@ -4,7 +4,7 @@ import {
   getTPlusTir,
   setCashflow,
 } from '../../utils/complements'
-import { Bond, BondJson } from '../types'
+import { Bond, BondForm, BondJson, Emitter } from '../types'
 import { PrismaClient } from '@prisma/client'
 import cron from 'node-cron'
 
@@ -12,7 +12,11 @@ const prisma = new PrismaClient()
 
 const bondsJson: BondJson[] = bondsEntries as BondJson[]
 
-export const getBonds = async () => {
+export const getBonds = async (emitter?: Emitter) => {
+  if (emitter) {
+    const bonds = await prisma.bond.findMany({ where: { emitter } })
+    return bonds
+  }
   const bonds = await prisma.bond.findMany()
   return bonds
 }
@@ -42,51 +46,22 @@ export const loadBonds = async () => {
     (bond) => !existingBonds.includes(bond.tickerUSD)
   )
 
-  const formatedBonds = filteredBonds.map((bond) => {
-    const {
-      tickerUSD,
-      tickerARG,
-      category,
-      emitter,
-      description,
-      dates,
-      amortization,
-      interests,
-      priceUSD,
-      priceARG,
-      change,
-      currentTir,
-      duration,
-      modifiedDuration,
-      parity,
-    } = bond
+  const formatedBonds = filteredBonds.map((bondJson) => {
+    const { dates } = bondJson
     const formatedDates = dates.map((date) => {
       const formatedDate = new Date(date)
       return formatedDate
     })
-    const newCashflow = setCashflow({
-      ...bond,
+    const bond: Bond = {
+      ...bondJson,
       dates: formatedDates,
-      createdAt: new Date(),
       updatedAt: new Date(),
-    })
+      createdAt: new Date(),
+    }
+    const newCashflow = setCashflow(bond)
     return {
-      tickerUSD,
-      tickerARG,
-      category,
-      emitter,
-      description,
-      dates: formatedDates,
-      amortization,
-      interests,
+      ...bond,
       cashflow: newCashflow,
-      priceUSD,
-      priceARG,
-      change,
-      currentTir,
-      duration,
-      modifiedDuration,
-      parity,
     }
   })
   const createBonds = await prisma.bond.createMany({ data: formatedBonds })
@@ -94,6 +69,64 @@ export const loadBonds = async () => {
   return createBonds
 }
 
+export const postBond = async (bondForm: BondForm) => {
+  const {
+    tickerUSD,
+    tickerARG,
+    category,
+    emitter,
+    description,
+    dates,
+    interests,
+    amortization,
+  } = bondForm
+
+  if (
+    !tickerUSD ||
+    !tickerARG ||
+    !category ||
+    !emitter ||
+    !description ||
+    !dates ||
+    !interests ||
+    !amortization
+  ) {
+    throw Error('Missing information')
+  }
+
+  const formatedDates = dates.map((date) => {
+    const formatedDate = new Date(date)
+    return formatedDate
+  })
+
+  const bond: Bond = {
+    ...bondForm,
+    cashflow: [],
+    priceUSD: 0,
+    priceARG: 0,
+    change: 0,
+    currentTir: 0,
+    duration: 0,
+    modifiedDuration: 0,
+    parity: 0,
+    updatedAt: new Date(),
+    createdAt: new Date(),
+  }
+
+  const newCashflow = setCashflow({
+    ...bond,
+    dates: formatedDates,
+  })
+
+  const createBond = await prisma.bond.create({
+    data: {
+      ...bond,
+      cashflow: newCashflow,
+    },
+  })
+  await prisma.$disconnect()
+  return createBond
+}
 cron.schedule('0,30 10-16 * * 1-5', async () => {
   // cron.schedule('*/2 * * * 1-5', async () => {
   const bonds = await getBonds()

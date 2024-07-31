@@ -23,11 +23,11 @@ const router = createBrowserRouter([
         element: <List />,
       },
       {
-        path: '/bonds/list',
+        path: '/bonds/:list',
         element: <Bonds />,
       },
       {
-        path: '/bonds/:tickerUSD',
+        path: '/bonds/detail/:tickerUSD',
         element: <Detail />,
       },
       {

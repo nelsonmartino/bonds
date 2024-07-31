@@ -71,10 +71,12 @@ enum Emitter {
   corp
   cbank
   treasury
+  province
 }
 
 enum Category {
   hard
   cer
   badlar
+  dlinked
 }

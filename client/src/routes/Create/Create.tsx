@@ -1,8 +1,71 @@
 import { useState } from 'react'
+import { Bond, BondErrors } from '../../types'
+import { validate } from '../../utils/validate'
+import axios from 'axios'
 let i = 1
 
 function Create() {
   const [events, setEvents] = useState<string[]>(['Evento 1'])
+
+  const [form, setForm] = useState<Partial<Bond>>({
+    tickerUSD: '',
+    tickerARG: '',
+    category: 'hard',
+    emitter: 'corp',
+    description: '',
+    dates: [],
+    amortization: [],
+    interests: [],
+  })
+
+  const [errors, setErrors] = useState<Partial<BondErrors>>({})
+
+  const changeHandler = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const property = e.target.name
+    const value = e.target.value
+    setErrors(validate({ ...form, [property]: value }))
+    setForm({ ...form, [property]: value })
+  }
+
+  const datesHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const event = e.target.name
+    if (event === 'first_date') {
+      const emDate = new Date(e.target.value)
+      if (form.dates) {
+        const newDates = form.dates.slice(1)
+        newDates.unshift(emDate)
+        setErrors(validate({ ...form, dates: newDates }))
+        setForm({ ...form, dates: newDates })
+      } else {
+        setErrors(validate({ ...form, dates: [emDate] }))
+        setForm({ ...form, dates: [emDate] })
+      }
+    } else {
+      if (form.dates) {
+        const newDates = [...form.dates]
+        newDates[Number(event)] = new Date(e.target.value)
+        setErrors(validate({ ...form, dates: [...newDates] }))
+        setForm({ ...form, dates: [...newDates] })
+      }
+    }
+  }
+
+  const percentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const property = e.target.id
+    if (property === 'interests' || property === 'amortization') {
+      const event = e.target.name
+      const newPercents = { ...form }[property]
+      if (newPercents) {
+        newPercents[Number(event)] = Number(e.target.value)
+        setErrors(validate({ ...form, [property]: newPercents }))
+        setForm({ ...form, [property]: newPercents })
+      }
+    }
+  }
 
   const addEvent = () => {
     i = i + 1
@@ -16,8 +79,25 @@ function Create() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    if (
+      !Object.keys(errors).length &&
+      form.dates?.length === events.length + 1 &&
+      form.amortization?.length === events.length &&
+      form.interests?.length === events.length &&
+      form.tickerUSD !== '' &&
+      form.tickerARG !== '' &&
+      form.description !== ''
+    ) {
+      await axios
+        .post('http://localhost:3001/bonds/create', form)
+        .then(() => alert('Bond created'))
+        .catch((error) => console.error(error))
+    } else {
+      setErrors({ ...errors, tickerUSD: 'Missing information' })
+    }
   }
 
   return (
@@ -34,8 +114,9 @@ function Create() {
         <div className="md:w-2/3">
           <input
             className="bg-white border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none  focus:border-blue-300  "
-            id="tickerUSD"
+            name="tickerUSD"
             type="text"
+            onChange={changeHandler}
           />
         </div>
       </div>
@@ -51,8 +132,9 @@ function Create() {
         <div className="md:w-2/3">
           <input
             className="bg-white border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none  focus:border-blue-300  "
-            id="tickerARG"
+            name="tickerARG"
             type="text"
+            onChange={changeHandler}
           />
         </div>
       </div>
@@ -66,11 +148,16 @@ function Create() {
           </label>
         </div>
         <div className="md:w-2/3">
-          <input
-            className="bg-white border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none  focus:border-blue-300  "
-            id="category"
-            type="text"
-          />
+          <select
+            name="category"
+            className="bg-white border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none  focus:border-blue-300"
+            onChange={changeHandler}
+          >
+            <option value="hard">Hard Dolar</option>
+            <option value="cer">CER</option>
+            <option value="badlar">Badlar</option>
+            <option value="dlinked">Dolar Linked</option>
+          </select>
         </div>
       </div>
       <div className="md:flex md:items-center mt-2">
@@ -83,11 +170,16 @@ function Create() {
           </label>
         </div>
         <div className="md:w-2/3">
-          <input
-            className="bg-white border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none  focus:border-blue-300  "
-            id="emitter"
-            type="text"
-          />
+          <select
+            name="emitter"
+            className="bg-white border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none  focus:border-blue-300"
+            onChange={changeHandler}
+          >
+            <option value="corp">Corporativo</option>
+            <option value="cbank">Banco Central</option>
+            <option value="treasury">Tesoro</option>
+            <option value="province">Provincia</option>
+          </select>
         </div>
       </div>
       <div className="md:flex md:items-center mt-2">
@@ -102,8 +194,10 @@ function Create() {
         <div className="md:w-2/3">
           <input
             className="bg-white border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none  focus:border-blue-300  "
-            id="description"
+            name="description"
             type="text"
+            onChange={changeHandler}
+            maxLength={50}
           />
         </div>
       </div>
@@ -121,6 +215,8 @@ function Create() {
             className="bg-white border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none  focus:border-blue-300  "
             id="description"
             type="date"
+            name="first_date"
+            onChange={datesHandler}
           />
         </div>
       </div>
@@ -143,7 +239,7 @@ function Create() {
           </button>
         </div>
       </div>
-      {events.map((event) => {
+      {events.map((event, index) => {
         return (
           <div className="md:flex md:items-center mt-2" key={event}>
             <div className="md:w-1/3">
@@ -157,26 +253,33 @@ function Create() {
             <div className="md:w-2/3">
               <input
                 className="bg-white border-2 border-gray-200 rounded py-2 px-4 mr-2 text-gray-700 leading-tight focus:outline-none  focus:border-blue-300  "
-                id="description"
+                name={`${index + 1}`}
                 type="date"
                 placeholder="Fecha"
+                onChange={datesHandler}
               />
               <input
                 className="bg-white border-2 border-gray-200 rounded w-1/6 py-2 px-4 text-gray-700 leading-tight focus:outline-none  focus:border-blue-300"
-                id="description"
+                name={`${index}`}
+                id="interests"
                 type="number"
                 min={0}
                 max={100}
                 placeholder="Interés"
+                onChange={percentHandler}
+                step="0.01"
               />
               <span className="mr-2"> %</span>
               <input
                 className="bg-white border-2 border-gray-200 rounded w-1/6 py-2 px-4 text-gray-700 leading-tight focus:outline-none  focus:border-blue-300"
-                id="description"
+                name={`${index}`}
+                id="amortization"
                 type="number"
                 min={0}
                 max={100}
                 placeholder="Amortización"
+                onChange={percentHandler}
+                step="0.01"
               />
               <span> %</span>
             </div>
@@ -189,11 +292,18 @@ function Create() {
         <div className="md:w-2/3">
           <button
             className="shadow bg-blue-200 hover:bg-blue-300  font-bold py-2 px-4 rounded"
-            type="button"
+            type="submit"
           >
             Crear
           </button>
         </div>
+      </div>
+      <div className="mt-2 md:flex md:items-center">
+        <div className="md:w-1/3"></div>
+        {Object.keys(errors) &&
+          Object.entries(errors).map((error) => (
+            <div className="text-red-600 md:w-2/3">{error[1]}</div>
+          ))}
       </div>
     </form>
   )
