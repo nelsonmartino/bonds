@@ -34,7 +34,7 @@ function Create() {
   const datesHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const event = e.target.name
     if (event === 'first_date') {
-      const emDate = new Date(e.target.value)
+      const emDate = e.target.value
       if (form.dates) {
         const newDates = form.dates.slice(1)
         newDates.unshift(emDate)
@@ -47,23 +47,29 @@ function Create() {
     } else {
       if (form.dates) {
         const newDates = [...form.dates]
-        newDates[Number(event)] = new Date(e.target.value)
+        newDates[Number(event)] = e.target.value
         setErrors(validate({ ...form, dates: [...newDates] }))
         setForm({ ...form, dates: [...newDates] })
       }
     }
   }
 
-  const percentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const numbersHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const property = e.target.id
     if (property === 'interests' || property === 'amortization') {
-      const event = e.target.name
+      const event = Number(e.target.name)
+      const value = Number(e.target.value)
       const newPercents = { ...form }[property]
       if (newPercents) {
-        newPercents[Number(event)] = Number(e.target.value)
+        newPercents[event] = value
         setErrors(validate({ ...form, [property]: newPercents }))
         setForm({ ...form, [property]: newPercents })
       }
+    }
+    if (property === 'initialValue') {
+      const value = Number(e.target.value)
+      setErrors(validate({ ...form, initialValue: value }))
+      setForm({ ...form, initialValue: value })
     }
   }
 
@@ -117,6 +123,7 @@ function Create() {
             name="tickerUSD"
             type="text"
             onChange={changeHandler}
+            value={form.tickerUSD}
           />
         </div>
       </div>
@@ -135,6 +142,7 @@ function Create() {
             name="tickerARG"
             type="text"
             onChange={changeHandler}
+            value={form.tickerARG}
           />
         </div>
       </div>
@@ -152,6 +160,7 @@ function Create() {
             name="category"
             className="bg-white border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none  focus:border-blue-300"
             onChange={changeHandler}
+            value={form.category}
           >
             <option value="hard">Hard Dolar</option>
             <option value="cer">CER</option>
@@ -174,6 +183,7 @@ function Create() {
             name="emitter"
             className="bg-white border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none  focus:border-blue-300"
             onChange={changeHandler}
+            value={form.emitter}
           >
             <option value="corp">Corporativo</option>
             <option value="cbank">Banco Central</option>
@@ -197,10 +207,33 @@ function Create() {
             name="description"
             type="text"
             onChange={changeHandler}
+            value={form.description}
             maxLength={50}
           />
         </div>
       </div>
+      <div className="md:flex md:items-center mt-2">
+        <div className="md:w-1/3">
+          <label
+            className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+            htmlFor="description"
+          >
+            Valor Inicial
+          </label>
+        </div>
+        <div className="md:w-2/3">
+          <input
+            className="bg-white border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none  focus:border-blue-300  "
+            name="initialValue"
+            id="initialValue"
+            type="number"
+            onChange={numbersHandler}
+            value={form.initialValue}
+            maxLength={50}
+          />
+        </div>
+      </div>
+
       <div className="md:flex md:items-center mt-2">
         <div className="md:w-1/3">
           <label
@@ -217,6 +250,7 @@ function Create() {
             type="date"
             name="first_date"
             onChange={datesHandler}
+            value={form.dates && form.dates[0]}
           />
         </div>
       </div>
@@ -257,6 +291,7 @@ function Create() {
                 type="date"
                 placeholder="Fecha"
                 onChange={datesHandler}
+                value={form.dates && form.dates[index + 1]}
               />
               <input
                 className="bg-white border-2 border-gray-200 rounded w-1/6 py-2 px-4 text-gray-700 leading-tight focus:outline-none  focus:border-blue-300"
@@ -266,8 +301,9 @@ function Create() {
                 min={0}
                 max={100}
                 placeholder="Interés"
-                onChange={percentHandler}
-                step="0.01"
+                onChange={numbersHandler}
+                value={form.interests && form.interests[index]}
+                step="0.001"
               />
               <span className="mr-2"> %</span>
               <input
@@ -278,8 +314,9 @@ function Create() {
                 min={0}
                 max={100}
                 placeholder="Amortización"
-                onChange={percentHandler}
-                step="0.01"
+                onChange={numbersHandler}
+                value={form.amortization && form.amortization[index]}
+                step="0.001"
               />
               <span> %</span>
             </div>

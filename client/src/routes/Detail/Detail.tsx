@@ -12,37 +12,36 @@ import moment from 'moment'
 
 interface Cashflow {
   date: Date
-  amortization: number
-  interest: number
+  amortCash: number
+  interestCash: number
   cash: number
 }
 
 function Detail() {
   const { tickerUSD } = useParams()
-  console.log(tickerUSD)
 
   const [bond, setBond] = useState<Bond>()
   const [data, setData] = useState<Cashflow[]>([])
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/bonds?ticker=${tickerUSD}`)
+      .get<Bond>(`http://localhost:3001/bonds?ticker=${tickerUSD}`)
       .then(({ data }) => {
         setBond(data)
         const currentCashflow = data.dates.map((date: Date, index: number) => {
-          let amortization: number
-          let interest: number
+          let amortCash: number
+          let interestCash: number
           let cash: number
           if (index) {
-            amortization = data.amortization[index - 1]
-            interest = data.interests[index - 1]
+            amortCash = data.amortCash[index - 1]
+            interestCash = data.interestCash[index - 1]
             cash = data.cashflow[index - 1]
           } else {
-            amortization = 0
-            interest = 0
+            amortCash = 0
+            interestCash = 0
             cash = 0
           }
-          return { date, amortization, interest, cash }
+          return { date, amortCash, interestCash, cash }
         })
         setData(currentCashflow)
       })
@@ -59,16 +58,16 @@ function Detail() {
         ),
       },
       {
-        accessorKey: 'amortization', //simple recommended way to define a column
+        accessorKey: 'amortCash', //simple recommended way to define a column
         header: 'Capital',
       },
       {
-        accessorKey: 'interest', //simple recommended way to define a column
+        accessorKey: 'interestCash', //simple recommended way to define a column
         header: 'Interes',
       },
       {
         accessorKey: 'cash', //simple recommended way to define a column
-        header: 'Cashflow',
+        header: 'Total',
       },
     ],
     []

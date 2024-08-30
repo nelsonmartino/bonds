@@ -32,9 +32,12 @@ model Bond {
   category  Category
   emitter Emitter
   description String
+  initialValue Int
   dates DateTime[]
   amortization  Float[]
   interests Float[]
+  amortCash Float[]
+  interestCash  Float[]
   cashflow  Float[]
   priceUSD Float
   priceARG Float

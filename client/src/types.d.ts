@@ -8,9 +8,12 @@ export interface Bond {
   category: Category
   emitter: Emitter
   description: string
-  dates: Date[]
+  initialValue: number
+  dates: string[]
   amortization: number[]
   interests: number[]
+  amortCash: number[]
+  interestCash: number[]
   cashflow: number[]
   priceUSD: number
   priceARG: number
@@ -29,6 +32,7 @@ export interface BondErrors {
   category: string
   emitter: string
   description: string
+  initialValue: string
   dates: string
   amortization: string
   interests: string

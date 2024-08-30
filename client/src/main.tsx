@@ -6,11 +6,10 @@ import { store } from './redux/store'
 // import Root from './routes/root'
 // import Contact from './routes/contact'
 import ErrorPage from './errorPage'
-import { Bonds, Detail, Create } from './routes'
+import { Bonds, Detail, Create, Login, List } from './routes'
 import { NavBar } from './components'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
-import List from './routes/List/List'
 
 const router = createBrowserRouter([
   {
@@ -33,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: '/create',
         element: <Create />,
+      },
+      {
+        path: '/login',
+        element: <Login />,
       },
     ],
   },

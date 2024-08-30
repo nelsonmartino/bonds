@@ -47,7 +47,11 @@ export const validate = (form: Partial<Bond>) => {
         errors.amortization = 'Amortization values have to be between 0 and 100'
       }
     })
-    const total = form.amortization.reduce((accu, amort) => amort + accu, 0)
+    const total =
+      Math.round(
+        form.amortization.reduce((accu, amort) => amort + accu, 0) * 100
+      ) / 100
+
     if (total !== 100) {
       errors.amortization = 'Total amortization must be 100'
     }
@@ -60,23 +64,32 @@ export const validate = (form: Partial<Bond>) => {
       errors.description = 'Description can have 50 characters maximum'
     }
   }
+  if (form.initialValue) {
+    if (form.initialValue <= 0) {
+      errors.description = 'Initial value must be greater than 0'
+    }
+  }
   if (form.dates?.length) {
     for (let i = 1; i < form.dates.length; i++) {
-      if (form.dates[i - 1].getTime() > form.dates[i].getTime()) {
+      if (
+        new Date(form.dates[i - 1]).getTime() >
+        new Date(form.dates[i]).getTime()
+      ) {
         errors.dates = 'Dates have to be incremental, from oldest to newest'
       }
     }
     const range =
-      (form.dates[form.dates.length - 1].getTime() - form.dates[0].getTime()) /
+      (new Date(form.dates[form.dates.length - 1]).getTime() -
+        new Date(form.dates[0]).getTime()) /
       (24 * 3600 * 1000 * 365)
     if (range > 100) {
       errors.dates = 'Please verify dates total range. It is over 100 years'
     }
     form.dates.map((date, index) => {
       if (
-        date.getUTCFullYear() < 2000 ||
-        date.getUTCFullYear() > 2200 ||
-        isNaN(date.getUTCFullYear())
+        new Date(date).getUTCFullYear() < 2000 ||
+        new Date(date).getUTCFullYear() > 2200 ||
+        isNaN(new Date(date).getUTCFullYear())
       ) {
         if (index) {
           errors.dates = `Please verify date in event ${index}`

@@ -14,7 +14,7 @@ function List() {
         </Link>
       </div>
       <div className="py-3">
-        <Link to={'/bonds/provinces'} className="hover:text-blue-500">
+        <Link to={'/bonds/province'} className="hover:text-blue-500">
           Bonos Sub-Soberanos
         </Link>
       </div>

@@ -1,18 +1,49 @@
+// import axios from 'axios'
 import bondsEntries from '../../utils/bonds.json'
 import {
   getCurrentPrice,
   getTPlusTir,
+  setAmortCash,
   setCashflow,
+  setInterestCash,
 } from '../../utils/complements'
-import { Bond, BondForm, BondJson, Emitter } from '../types'
+import {
+  // ApiAccess,
+  Bond,
+  BondForm,
+  // BondJson,
+  Emitter,
+  // NOResponse,
+} from '../types'
 import { PrismaClient } from '@prisma/client'
 import cron from 'node-cron'
+// import qs from 'qs'
 
 const prisma = new PrismaClient()
 
-const bondsJson: BondJson[] = bondsEntries as BondJson[]
+const bondsJson: BondForm[] = bondsEntries as BondForm[]
 
 export const getBonds = async (emitter?: Emitter) => {
+  //
+  // const access = await axios.post<ApiAccess>(
+  //   process.env.ACCESS_URL as string,
+  //   qs.stringify({
+  //     username: process.env.API_USERNAME,
+  //     password: process.env.API_PASSWORD,
+  //     grant_type: 'password',
+  //   })
+  // )
+
+  // const { access_token } = access.data
+
+  // console.log({ access_token })
+
+  // const ons = await axios.get<NOResponse>(process.env.ONS_QUERY_URL as string, {
+  //   headers: { Authorization: `Bearer ${access_token}` },
+  // })
+
+  // console.log(ons.data)
+
   if (emitter) {
     const bonds = await prisma.bond.findMany({ where: { emitter } })
     return bonds
@@ -47,17 +78,50 @@ export const loadBonds = async () => {
   )
 
   const formatedBonds = filteredBonds.map((bondJson) => {
-    const { dates } = bondJson
+    const {
+      tickerUSD,
+      tickerARG,
+      category,
+      emitter,
+      description,
+      initialValue,
+      dates,
+      interests,
+      amortization,
+    } = bondJson
     const formatedDates = dates.map((date) => {
       const formatedDate = new Date(date)
       return formatedDate
     })
+
+    const amortCash = setAmortCash(bondJson)
+
+    const interestCash = setInterestCash(bondJson, formatedDates, amortCash)
+
     const bond: Bond = {
-      ...bondJson,
+      tickerUSD,
+      tickerARG,
+      category,
+      emitter,
+      description,
+      initialValue,
+      interests,
+      amortization,
+      amortCash,
+      interestCash,
       dates: formatedDates,
+      cashflow: [],
+      priceUSD: initialValue,
+      priceARG: initialValue,
+      change: 0,
+      currentTir: 0,
+      duration: 0,
+      modifiedDuration: 0,
+      parity: 0,
       updatedAt: new Date(),
       createdAt: new Date(),
     }
+
     const newCashflow = setCashflow(bond)
     return {
       ...bond,
@@ -76,6 +140,7 @@ export const postBond = async (bondForm: BondForm) => {
     category,
     emitter,
     description,
+    initialValue,
     dates,
     interests,
     amortization,
@@ -87,6 +152,7 @@ export const postBond = async (bondForm: BondForm) => {
     !category ||
     !emitter ||
     !description ||
+    !initialValue ||
     !dates ||
     !interests ||
     !amortization
@@ -99,8 +165,22 @@ export const postBond = async (bondForm: BondForm) => {
     return formatedDate
   })
 
+  const amortCash = setAmortCash(bondForm)
+
+  const interestCash = setInterestCash(bondForm, formatedDates, amortCash)
+
   const bond: Bond = {
-    ...bondForm,
+    tickerUSD,
+    tickerARG,
+    category,
+    emitter,
+    description,
+    initialValue,
+    interests,
+    amortization,
+    amortCash,
+    interestCash,
+    dates: formatedDates,
     cashflow: [],
     priceUSD: 0,
     priceARG: 0,
@@ -113,10 +193,7 @@ export const postBond = async (bondForm: BondForm) => {
     createdAt: new Date(),
   }
 
-  const newCashflow = setCashflow({
-    ...bond,
-    dates: formatedDates,
-  })
+  const newCashflow = setCashflow(bond)
 
   const createBond = await prisma.bond.create({
     data: {
@@ -127,15 +204,14 @@ export const postBond = async (bondForm: BondForm) => {
   await prisma.$disconnect()
   return createBond
 }
-cron.schedule('0,30 10-16 * * 1-5', async () => {
-  // cron.schedule('*/2 * * * 1-5', async () => {
+cron.schedule('10,40 10-16 * * 1-5', async () => {
+  // cron.schedule('*/1 * * * 1-5', async () => {
   const bonds = await getBonds()
 
   const updatedPriceBonds = await getCurrentPrice(bonds)
 
   if (updatedPriceBonds) {
     const updatedTirBonds = await getTPlusTir(updatedPriceBonds, 1)
-
     if (updatedTirBonds) {
       await updateBonds(updatedTirBonds)
     }
