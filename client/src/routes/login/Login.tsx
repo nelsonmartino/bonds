@@ -1,6 +1,27 @@
-// import { Image } from "@mui/icons-material"
+import { useState } from 'react'
+import { User } from '../../types'
 
 function Login() {
+  const [form, setForm] = useState<User>({
+    email: '',
+    password: '',
+  })
+
+  const changeHandler = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const property = e.target.name
+    const value = e.target.value
+    // setErrors(validate({ ...form, [property]: value }))
+    setForm({ ...form, [property]: value })
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+  }
+
   return (
     <div>
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -11,7 +32,12 @@ function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form
+            className="space-y-6"
+            action="#"
+            method="POST"
+            onSubmit={handleSubmit}
+          >
             <div>
               <label
                 htmlFor="email"
@@ -26,6 +52,7 @@ function Login() {
                   type="email"
                   autoComplete="email"
                   required
+                  onChange={changeHandler}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -50,6 +77,7 @@ function Login() {
                   type="password"
                   autoComplete="current-password"
                   required
+                  onChange={changeHandler}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>

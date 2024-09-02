@@ -37,3 +37,8 @@ export interface BondErrors {
   amortization: string
   interests: string
 }
+
+export interface User {
+  email: string
+  password: string
+}
