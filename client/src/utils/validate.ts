@@ -101,3 +101,13 @@ export const validate = (form: Partial<Bond>) => {
   }
   return errors
 }
+
+export const validateEmail = ({ email }: { email: string }) => {
+  const error = { email: '' }
+  const emailRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+  if (!email.match(emailRegex)) {
+    error.email = 'Invalid email'
+  }
+  return error
+}
