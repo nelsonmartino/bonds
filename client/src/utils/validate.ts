@@ -102,12 +102,12 @@ export const validate = (form: Partial<Bond>) => {
   return errors
 }
 
-export const validateEmail = ({ email }: { email: string }) => {
-  const error = { email: '' }
+export const validateEmail = (email: string) => {
+  // const error = { visibility: false }
   const emailRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
   if (!email.match(emailRegex)) {
-    error.email = 'Invalid email'
+    return ''
   }
-  return error
+  return 'invisible'
 }

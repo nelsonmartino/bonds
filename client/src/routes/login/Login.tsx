@@ -8,7 +8,7 @@ function Login() {
     password: '',
   })
 
-  const [error, setError] = useState<Partial<User>>({})
+  const [error, setError] = useState<string>('invisible')
 
   const changeHandler = (
     e:
@@ -17,18 +17,15 @@ function Login() {
   ) => {
     const property = e.target.name
     const value = e.target.value
-    // setErrors(validate({ ...form, [property]: value }))
     setForm({ ...form, [property]: value })
   }
 
   const mailHandler = (e: React.FocusEvent<HTMLInputElement>) => {
-    setError(validateEmail({ email: e.target.value }))
-    console.log(validateEmail({ email: e.target.value }))
+    setError(validateEmail(e.target.value))
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(error)
   }
 
   return (
@@ -61,13 +58,14 @@ function Login() {
                   type="email"
                   autoComplete="email"
                   required
-                  // onChange={changeHandler}
                   onBlur={mailHandler}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-              <div className="relative block w-full p-3 mb-4 leading-5 invisible text-white bg-red-500 rounded-lg opacity-100 font-regular">
-                An error alert for showing message.
+              <div
+                className={`relative block w-full p-3 mb-4 leading-5 ${error} text-white bg-red-500 rounded-lg opacity-100 font-regular`}
+              >
+                Invalid email
               </div>
             </div>
 
