@@ -36,7 +36,11 @@ function Login() {
         .then((res) =>
           localStorage.setItem(
             'loggedUser',
-            JSON.stringify({ email: form.email, token: res.data })
+            JSON.stringify({
+              email: form.email,
+              token: res.data.token,
+              name: res.data.name,
+            })
           )
         )
         .catch((e) => console.error(e))

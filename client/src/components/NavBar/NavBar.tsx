@@ -1,5 +1,6 @@
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { Landing } from '../../routes'
+import UserLogin from './UserLogin'
 
 function NavBar() {
   const location = useLocation()
@@ -22,9 +23,10 @@ function NavBar() {
           <Link to={'/register'} className="hover:text-blue-500 px-6">
             Registrarse
           </Link>
-          <Link to={'/login'} className="hover:text-blue-500">
+          {/* <Link to={'/login'} className="hover:text-blue-500">
             Iniciar Sesión
-          </Link>
+          </Link> */}
+          <UserLogin />
         </div>
       </div>
       {location.pathname === '/' && <Landing />}
