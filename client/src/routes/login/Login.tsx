@@ -3,9 +3,13 @@ import { User } from '../../types'
 import { validateEmail } from '../../utils/validate'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '../../redux/hooks'
+import { setLogin } from '../../redux/loginSlice'
 
 function Login() {
   const navigate = useNavigate()
+
+  const dispatch = useAppDispatch()
 
   const [form, setForm] = useState<User>({
     email: '',
@@ -31,9 +35,9 @@ function Login() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (hideError && form.email && form.password) {
-      await axios
+      axios
         .post('http://localhost:3001/login', form)
-        .then((res) =>
+        .then((res) => {
           localStorage.setItem(
             'loggedUser',
             JSON.stringify({
@@ -42,7 +46,8 @@ function Login() {
               name: res.data.name,
             })
           )
-        )
+          dispatch(setLogin(true))
+        })
         .catch((e) => console.error(e))
       navigate('/bonds')
     }

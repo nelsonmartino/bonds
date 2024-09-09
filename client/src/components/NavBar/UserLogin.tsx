@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAppSelector } from '../../redux/hooks'
 
 interface LogedUser {
   name: string
@@ -8,6 +9,8 @@ interface LogedUser {
 }
 
 const UserLogin = () => {
+  const { login } = useAppSelector((state) => state.login)
+
   const [user, setUser] = useState<LogedUser>({
     name: '',
     token: '',
@@ -19,10 +22,10 @@ const UserLogin = () => {
     if (logedUser) {
       setUser(JSON.parse(logedUser))
     }
-  }, [])
+  }, [login])
   return (
     <>
-      {user.name ? (
+      {login ? (
         <div>{user.name}</div>
       ) : (
         <Link to={'/login'} className="hover:text-blue-500">

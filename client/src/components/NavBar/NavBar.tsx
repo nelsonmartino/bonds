@@ -1,6 +1,7 @@
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { Landing } from '../../routes'
 import UserLogin from './UserLogin'
+// import { useState } from 'react'
 
 function NavBar() {
   const location = useLocation()
@@ -31,6 +32,7 @@ function NavBar() {
       </div>
       {location.pathname === '/' && <Landing />}
       <div>
+        {/* <Outlet context={setIsLoged} /> */}
         <Outlet />
       </div>
     </>
