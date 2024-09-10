@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useAppSelector } from '../../redux/hooks'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { setLogin } from '../../redux/loginSlice'
 
 interface LogedUser {
   name: string
@@ -10,6 +11,8 @@ interface LogedUser {
 
 const UserLogin = () => {
   const { login } = useAppSelector((state) => state.login)
+
+  const dispatch = useAppDispatch()
 
   const [user, setUser] = useState<LogedUser>({
     name: '',
@@ -23,12 +26,38 @@ const UserLogin = () => {
       setUser(JSON.parse(logedUser))
     }
   }, [login])
+
+  const logoutHandler = () => {
+    dispatch(setLogin(false))
+    localStorage.removeItem('loggedUser')
+  }
+
   return (
     <>
       {login ? (
-        <div>{user.name}</div>
+        <div className="flex flex-row pl-3">
+          <p>{user.name} </p>
+          <p onClick={logoutHandler} className="cursor-pointer pl-1">
+            <svg
+              className="h-6 w-6 text-red-500"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              {' '}
+              <path stroke="none" d="M0 0h24v24H0z" />{' '}
+              <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />{' '}
+              <path d="M7 12h14l-3 -3m0 6l3 -3" />
+            </svg>
+          </p>
+        </div>
       ) : (
-        <Link to={'/login'} className="hover:text-blue-500">
+        <Link to={'/login'} className="hover:text-blue-500 pl-3">
           Iniciar Sesión
         </Link>
       )}

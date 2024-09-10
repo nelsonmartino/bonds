@@ -2,9 +2,12 @@ import { Outlet, Link, useLocation } from 'react-router-dom'
 import { Landing } from '../../routes'
 import UserLogin from './UserLogin'
 // import { useState } from 'react'
+import { useAppSelector } from '../../redux/hooks'
 
 function NavBar() {
   const location = useLocation()
+
+  const { login } = useAppSelector((state) => state.login)
 
   return (
     <>
@@ -18,12 +21,14 @@ function NavBar() {
           <div className="font-bold">BonArg</div>
         )}
         <div className="flex flex-row justify-between font-semibold">
-          <Link to={'/bonds'} className="hover:text-blue-500">
+          <Link to={'/bonds'} className="hover:text-blue-500 pr-3">
             Bonos
           </Link>
-          <Link to={'/register'} className="hover:text-blue-500 px-6">
-            Registrarse
-          </Link>
+          {!login && (
+            <Link to={'/register'} className="hover:text-blue-500 px-3">
+              Registrarse
+            </Link>
+          )}
           {/* <Link to={'/login'} className="hover:text-blue-500">
             Iniciar Sesión
           </Link> */}
