@@ -93,3 +93,9 @@ interface NegotiableObligation {
   ultimoCierre: number
   volumen: number
 }
+
+export interface Portfolio {
+  email: string
+  tickerARG: string
+  qty: number
+}

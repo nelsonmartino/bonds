@@ -54,10 +54,11 @@ model Bond {
 
 model Portfolio {
   id  String  @id @default(uuid())
-  bond  Bond  @relation(fields:[bondTicker], references: [tickerUSD])
+  bond  Bond  @relation(fields:[bondTicker], references: [tickerARG])
   bondTicker  String
-  user  User  @relation(fields:[userId], references: [id])
-  userId  String
+  user  User  @relation(fields:[userEmail], references: [email])
+  userEmail  String
+  qty Int
 }
 
 model Holiday {
