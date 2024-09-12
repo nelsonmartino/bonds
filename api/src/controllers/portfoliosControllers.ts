@@ -5,7 +5,6 @@ const prisma = new PrismaClient()
 
 export const postPortfolio = async (portfolio: Portfolio) => {
   const { email, tickerARG, qty } = portfolio
-  // console.log(email, tickerARG)
   if (!email || !tickerARG || !qty) {
     throw Error('Missing information')
   }
@@ -20,7 +19,8 @@ export const postPortfolio = async (portfolio: Portfolio) => {
 export const getPortfoliosByEmail = async (userEmail: string) => {
   const portfolios = await prisma.portfolio.findMany({
     where: { userEmail },
-    include: {
+    select: {
+      qty: true,
       bond: {
         select: {
           tickerUSD: true,
@@ -38,6 +38,24 @@ export const getPortfoliosByEmail = async (userEmail: string) => {
         },
       },
     },
+    // include: {
+    //   bond: {
+    //     select: {
+    //       tickerUSD: true,
+    //       tickerARG: true,
+    //       category: true,
+    //       emitter: true,
+    //       description: true,
+    //       priceUSD: true,
+    //       priceARG: true,
+    //       change: true,
+    //       currentTir: true,
+    //       duration: true,
+    //       modifiedDuration: true,
+    //       parity: true,
+    //     },
+    //   },
+    // },
   })
   return portfolios
 }

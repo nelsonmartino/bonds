@@ -46,7 +46,7 @@ function Login() {
               name: res.data.name,
             })
           )
-          dispatch(setLogin(true))
+          dispatch(setLogin({ login: true, name: res.data.name }))
         })
         .catch((e) => console.error(e))
       navigate('/bonds')

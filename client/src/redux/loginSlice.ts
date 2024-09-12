@@ -2,10 +2,12 @@ import { createSlice } from '@reduxjs/toolkit'
 
 interface InitialState {
   login: boolean
+  name: string
 }
 
 const initialState: InitialState = {
   login: false,
+  name: '',
 }
 
 export const loginSlice = createSlice({
@@ -13,7 +15,8 @@ export const loginSlice = createSlice({
   initialState,
   reducers: {
     setLogin: (state, action) => {
-      state.login = action.payload
+      state.login = action.payload.login
+      state.name = action.payload.name
     },
   },
 })

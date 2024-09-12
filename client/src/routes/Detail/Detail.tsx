@@ -28,21 +28,23 @@ function Detail() {
       .get<Bond>(`http://localhost:3001/bonds?ticker=${tickerUSD}`)
       .then(({ data }) => {
         setBond(data)
-        const currentCashflow = data.dates.map((date: Date, index: number) => {
-          let amortCash: number
-          let interestCash: number
-          let cash: number
-          if (index) {
-            amortCash = data.amortCash[index - 1]
-            interestCash = data.interestCash[index - 1]
-            cash = data.cashflow[index - 1]
-          } else {
-            amortCash = 0
-            interestCash = 0
-            cash = 0
+        const currentCashflow = data.dates.map(
+          (date: string, index: number) => {
+            let amortCash: number
+            let interestCash: number
+            let cash: number
+            if (index) {
+              amortCash = data.amortCash[index - 1]
+              interestCash = data.interestCash[index - 1]
+              cash = data.cashflow[index - 1]
+            } else {
+              amortCash = 0
+              interestCash = 0
+              cash = 0
+            }
+            return { date: new Date(date), amortCash, interestCash, cash }
           }
-          return { date, amortCash, interestCash, cash }
-        })
+        )
         setData(currentCashflow)
       })
       .catch((error) => console.error(error))

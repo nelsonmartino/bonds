@@ -1,31 +1,36 @@
-import { useEffect, useState } from 'react'
+// import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { setLogin } from '../../redux/loginSlice'
 
-interface LogedUser {
-  name: string
-  token: string
-  email: string
-}
+// interface LogedUser {
+//   name: string
+//   token: string
+//   email: string
+// }
 
 const UserLogin = () => {
-  const { login } = useAppSelector((state) => state.login)
+  const { login, name } = useAppSelector((state) => state.login)
 
   const dispatch = useAppDispatch()
 
-  const [user, setUser] = useState<LogedUser>({
-    name: '',
-    token: '',
-    email: '',
-  })
+  // const [user, setUser] = useState<LogedUser>({
+  //   name: '',
+  //   token: '',
+  //   email: '',
+  // })
 
   useEffect(() => {
     const logedUser = localStorage.getItem('loggedUser')
     if (logedUser) {
-      setUser(JSON.parse(logedUser))
+      // setUser(JSON.parse(logedUser))
+      // if (!login) {
+      //   dispatch(setLogin(true))
+      // }
+      dispatch(setLogin({ login: true, name: JSON.parse(logedUser).name }))
     }
-  }, [login])
+  }, [dispatch])
 
   const logoutHandler = () => {
     dispatch(setLogin(false))
@@ -36,18 +41,18 @@ const UserLogin = () => {
     <>
       {login ? (
         <div className="flex flex-row pl-3">
-          <p>{user.name} </p>
+          <p>{name} </p>
           <p onClick={logoutHandler} className="cursor-pointer pl-1">
             <svg
               className="h-6 w-6 text-red-500"
               width="24"
               height="24"
               viewBox="0 0 24 24"
-              stroke-width="2"
+              strokeWidth="2"
               stroke="currentColor"
               fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               {' '}
               <path stroke="none" d="M0 0h24v24H0z" />{' '}

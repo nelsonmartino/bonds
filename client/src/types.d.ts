@@ -42,3 +42,7 @@ export interface User {
   email: string
   password: string
 }
+export interface ApiPortfolio {
+  qty: number
+  bond: Partial<Bond>
+}
