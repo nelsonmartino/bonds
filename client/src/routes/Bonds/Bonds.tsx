@@ -66,10 +66,10 @@ function Bonds() {
       //   accessorKey: 'change', //simple recommended way to define a column
       //   header: 'TC',
       // },
-      // {
-      //   accessorKey: 'currentTir', //simple recommended way to define a column
-      //   header: 'TIR',
-      // },
+      {
+        accessorKey: 'currentTir', //simple recommended way to define a column
+        header: 'TIR',
+      },
       // {
       //   accessorKey: 'modifiedDuration', //simple recommended way to define a column
       //   header: 'MD',

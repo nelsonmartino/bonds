@@ -63,10 +63,10 @@ const Portfolio = () => {
         accessorKey: 'qty', //simple recommended way to define a column
         header: 'Cantidad',
       },
-      // {
-      //   accessorKey: 'bond.tickerARG', //simple recommended way to define a column
-      //   header: 'Ticker $',
-      // },
+      {
+        accessorKey: 'bond.currentTir', //simple recommended way to define a column
+        header: 'TIR',
+      },
     ],
     []
   )
@@ -88,15 +88,16 @@ const Portfolio = () => {
   })
 
   return (
-    <>
-      {/* {portfolio.map((p) => (
-        <div className="flex flex-row">
-          <div className="px-3">{p.bond.tickerUSD}</div>
-          <div className="px-3">{p.qty}</div>
+    <div className="flex flex-col w-full items-center">
+      <div className="flex flex-col w-3/4">
+        <div className="text-center text-xl font-semibold p-2 bg-blue-300 rounded-md border-2 w-full">
+          Tenencia
         </div>
-      ))} */}
-      <MaterialReactTable table={table} />
-    </>
+        <div className="w-full">
+          <MaterialReactTable table={table} />
+        </div>
+      </div>
+    </div>
   )
 }
 
