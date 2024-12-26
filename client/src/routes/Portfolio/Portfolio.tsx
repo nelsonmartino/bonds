@@ -7,11 +7,15 @@ import {
   MRT_ColumnDef,
   useMaterialReactTable,
 } from 'material-react-table'
+import { useAppDispatch } from '../../redux/hooks'
+import { setLogout } from '../../redux/loginSlice'
 
 const Portfolio = () => {
   const [portfolio, setPortfolio] = useState<ApiPortfolio[]>([])
 
   const navigate = useNavigate()
+
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     const loggedUser = localStorage.getItem('loggedUser')
@@ -30,10 +34,17 @@ const Portfolio = () => {
           setPortfolio(res.data)
         })
         .catch(() => {
+          localStorage.removeItem('loggedUser')
+          // dispatch(setLogin({ login: false, name: '' }))
+          dispatch(setLogout())
           navigate('/login')
         })
+    } else {
+      // dispatch(setLogin({ login: false, name: '' }))
+      dispatch(setLogout())
+      navigate('/login')
     }
-  }, [navigate])
+  }, [navigate, dispatch])
 
   const columns = useMemo<MRT_ColumnDef<ApiPortfolio>[]>(
     () => [

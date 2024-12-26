@@ -99,6 +99,9 @@ function Detail() {
   return (
     <>
       <div className="bg-blue-300 text-3xl font-extrabold text-center m-1 p-4 rounded-md">{`${tickerUSD} / ${bond?.tickerARG}`}</div>
+      <div className="bg-blue-300 text-2xl font-bold text-center m-1 p-2 rounded-md">
+        {bond?.description}
+      </div>
       <div className="flex flex-row">
         <div className="flex flex-row content-start w-1/2 flex-wrap">
           <DataCard name="TIR" value={`${bond?.currentTir} %` || '0 %'} />

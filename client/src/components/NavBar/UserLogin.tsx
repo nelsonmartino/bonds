@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { setLogin } from '../../redux/loginSlice'
+import { setLogin, setLogout } from '../../redux/loginSlice'
 
 // interface LogedUser {
 //   name: string
@@ -33,7 +33,7 @@ const UserLogin = () => {
   }, [dispatch])
 
   const logoutHandler = () => {
-    dispatch(setLogin(false))
+    dispatch(setLogout())
     localStorage.removeItem('loggedUser')
   }
 

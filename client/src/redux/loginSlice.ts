@@ -15,11 +15,13 @@ export const loginSlice = createSlice({
   initialState,
   reducers: {
     setLogin: (state, action) => {
-      state.login = action.payload.login
-      state.name = action.payload.name
+      const { login = false, name = '' } = action.payload || {}
+      state.login = login
+      state.name = name
     },
+    setLogout: () => ({ ...initialState }),
   },
 })
 
-export const { setLogin } = loginSlice.actions
+export const { setLogin, setLogout } = loginSlice.actions
 export default loginSlice.reducer
