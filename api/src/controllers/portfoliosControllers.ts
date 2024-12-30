@@ -8,6 +8,7 @@ export const postPortfolio = async (portfolio: Portfolio) => {
   if (!email || !tickerARG || !qty) {
     throw Error('Missing information')
   }
+
   const newPortfolio = await prisma.portfolio.create({
     data: { bondTicker: tickerARG, userEmail: email, qty },
   })

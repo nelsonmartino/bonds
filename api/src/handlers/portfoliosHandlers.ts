@@ -23,7 +23,6 @@ export const postPortfolioHandler = async (
   res: Response
 ) => {
   const { email, tickerARG, qty } = req.body
-
   try {
     const newPortfolio = await postPortfolio({ email, tickerARG, qty })
     res.status(200).json(newPortfolio)

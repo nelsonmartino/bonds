@@ -6,7 +6,7 @@ import {
 } from '../controllers/usersControllers'
 
 export const getUsersHandler = async (req: Request, res: Response) => {
-  if (req.body.category != 'admin') {
+  if (req.body.user.category != 'admin') {
     return res.status(401).json({ message: 'Not authorized' })
   }
 

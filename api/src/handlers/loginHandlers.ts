@@ -8,9 +8,13 @@ export const loginHandler = async (req: Request, res: Response) => {
   const userDB = await getUserByEmail(userForm.email)
   if (userDB) {
     if (userForm.password === userDB?.password) {
-      const token = jwt.sign(userDB, process.env.JWT_SECRET_KEY as string, {
-        expiresIn: '1h',
-      })
+      const token = jwt.sign(
+        { email: userDB.email, category: userDB.category },
+        process.env.JWT_SECRET_KEY as string,
+        {
+          expiresIn: '1h',
+        }
+      )
       return res.status(200).json({ token, name: userDB.name })
     }
     return res.status(403).json({ message: 'Wrong password' })

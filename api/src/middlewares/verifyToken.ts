@@ -14,7 +14,7 @@ export const verifyToken = (
     if (err) {
       return res.status(403).json(err)
     } else {
-      req.body = data
+      req.body = { ...req.body, user: data }
       next()
     }
   })

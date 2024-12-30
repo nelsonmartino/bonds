@@ -9,6 +9,7 @@ import {
 } from 'material-react-table'
 import { useAppDispatch } from '../../redux/hooks'
 import { setLogout } from '../../redux/loginSlice'
+import CreatePortfolio from './CreatePortfolio'
 
 const Portfolio = () => {
   const [portfolio, setPortfolio] = useState<ApiPortfolio[]>([])
@@ -35,12 +36,10 @@ const Portfolio = () => {
         })
         .catch(() => {
           localStorage.removeItem('loggedUser')
-          // dispatch(setLogin({ login: false, name: '' }))
           dispatch(setLogout())
           navigate('/login')
         })
     } else {
-      // dispatch(setLogin({ login: false, name: '' }))
       dispatch(setLogout())
       navigate('/login')
     }
@@ -106,6 +105,9 @@ const Portfolio = () => {
         </div>
         <div className="w-full">
           <MaterialReactTable table={table} />
+        </div>
+        <div>
+          <CreatePortfolio />
         </div>
       </div>
     </div>

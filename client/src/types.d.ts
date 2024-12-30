@@ -42,7 +42,19 @@ export interface User {
   email: string
   password: string
 }
+
 export interface ApiPortfolio {
   qty: number
   bond: Partial<Bond>
+}
+
+export interface NewPortfolio {
+  tickerARG: string
+  qty: number
+}
+
+export interface loggedUser {
+  email: string
+  token: string
+  name: string
 }
