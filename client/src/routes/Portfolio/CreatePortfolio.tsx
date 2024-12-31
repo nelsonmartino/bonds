@@ -1,8 +1,12 @@
 import { useState } from 'react'
-import { loggedUser, NewPortfolio } from '../../types'
+import { ApiPortfolio, loggedUser, NewPortfolio } from '../../types'
 import axios from 'axios'
 
-const CreatePortfolio = () => {
+interface CreatePortfolioProps {
+  setPortfolio: React.Dispatch<React.SetStateAction<ApiPortfolio[]>>
+}
+
+const CreatePortfolio: React.FC<CreatePortfolioProps> = ({ setPortfolio }) => {
   const [form, setForm] = useState<NewPortfolio>({
     tickerARG: '',
     qty: 0,
@@ -36,7 +40,13 @@ const CreatePortfolio = () => {
             }
           )
 
-          .then(() => alert('Bond added to Portfolio'))
+          .then(({ data }) => {
+            setPortfolio(data)
+            setForm({
+              tickerARG: '',
+              qty: 0,
+            })
+          })
           .catch((error) => console.error(error))
       }
     }
@@ -67,7 +77,6 @@ const CreatePortfolio = () => {
             placeholder="Cantidad"
             onChange={changeHandler}
             value={form.qty}
-            step="1"
           />
           <button
             className="shadow bg-blue-200 h-10 hover:bg-blue-300 font-bold px-4 rounded"

@@ -9,9 +9,11 @@ export const postPortfolio = async (portfolio: Portfolio) => {
     throw Error('Missing information')
   }
 
-  const newPortfolio = await prisma.portfolio.create({
+  await prisma.portfolio.create({
     data: { bondTicker: tickerARG, userEmail: email, qty },
   })
+
+  const newPortfolio = await getPortfoliosByEmail(email)
 
   await prisma.$disconnect()
   return newPortfolio

@@ -107,7 +107,7 @@ const Portfolio = () => {
           <MaterialReactTable table={table} />
         </div>
         <div>
-          <CreatePortfolio />
+          <CreatePortfolio setPortfolio={setPortfolio} />
         </div>
       </div>
     </div>
