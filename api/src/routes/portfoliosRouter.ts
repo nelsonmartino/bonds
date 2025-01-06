@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import {
+  deletePortfolioHandler,
   getPortfoliosHandler,
   postPortfolioHandler,
 } from '../handlers/portfoliosHandlers'
@@ -11,5 +12,6 @@ portfoliosRouter.use(verifyToken)
 
 portfoliosRouter.get('/', getPortfoliosHandler)
 portfoliosRouter.post('/', postPortfolioHandler)
+portfoliosRouter.delete('/', deletePortfolioHandler)
 
 export default portfoliosRouter

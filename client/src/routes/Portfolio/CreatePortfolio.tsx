@@ -73,7 +73,6 @@ const CreatePortfolio: React.FC<CreatePortfolioProps> = ({ setPortfolio }) => {
             className="bg-white border-2 border-gray-200 rounded px-4 mr-2 text-gray-700 h-full focus:outline-none focus:border-blue-300"
             name="qty"
             type="number"
-            min={0}
             placeholder="Cantidad"
             onChange={changeHandler}
             value={form.qty}
