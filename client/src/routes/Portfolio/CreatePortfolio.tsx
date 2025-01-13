@@ -54,34 +54,30 @@ const CreatePortfolio: React.FC<CreatePortfolioProps> = ({ setPortfolio }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex items-center mt-2">
-        <div className="w-1/4">
-          <label className="block text-gray-500 font-bold md:text-right mb-1 pr-4">
-            Nuevo activo
-          </label>
-        </div>
-        <div className="md:w-3/4 h-10">
-          <input
-            className="bg-white border-2 border-gray-200 rounded px-4 mr-2 text-gray-700 h-full focus:outline-none  focus:border-blue-300"
-            name="tickerARG"
-            type="text"
-            placeholder="Ticker ARG"
-            onChange={changeHandler}
-            value={form.tickerARG}
-          />
-          <input
-            className="bg-white border-2 border-gray-200 rounded px-4 mr-2 text-gray-700 h-full focus:outline-none focus:border-blue-300"
-            name="qty"
-            type="number"
-            placeholder="Cantidad"
-            onChange={changeHandler}
-            value={form.qty}
-          />
+      <div className="flex justify-center items-center mt-2 flex-wrap">
+        <label className="text-gray-500 font-bold mb-1 pr-4">Activo</label>
+        <input
+          className="bg-white border-2 border-gray-200 rounded pl-1 mr-2 text-gray-700 h-full focus:outline-none  focus:border-blue-300 w-36"
+          name="tickerARG"
+          type="text"
+          placeholder="Ticker ARG"
+          onChange={changeHandler}
+          value={form.tickerARG}
+        />
+        <input
+          className="bg-white border-2 border-gray-200 rounded pl-1 mr-2 text-gray-700 h-full focus:outline-none focus:border-blue-300 w-24"
+          name="qty"
+          type="number"
+          placeholder="Cantidad"
+          onChange={changeHandler}
+          value={form.qty}
+        />
+        <div>
           <button
             className="shadow bg-blue-200 h-10 hover:bg-blue-300 font-bold px-4 rounded"
             type="submit"
           >
-            Agregar
+            Agregar/Actualizar
           </button>
         </div>
       </div>

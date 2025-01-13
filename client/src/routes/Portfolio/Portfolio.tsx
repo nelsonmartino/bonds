@@ -192,6 +192,11 @@ const Portfolio = () => {
         <div>
           <CreatePortfolio setPortfolio={setPortfolio} />
         </div>
+        <div className="flex justify-center mt-5">
+          <button className="shadow bg-blue-200 h-10 w-52 hover:bg-blue-300 font-bold px-4 rounded">
+            <Link to={'/cashflow'}>Cashflow</Link>
+          </button>
+        </div>
       </div>
     </div>
   )

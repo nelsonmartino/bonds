@@ -6,7 +6,15 @@ import { store } from './redux/store'
 // import Root from './routes/root'
 // import Contact from './routes/contact'
 import ErrorPage from './errorPage'
-import { Bonds, Detail, Create, Login, List, Portfolio } from './routes'
+import {
+  Bonds,
+  Detail,
+  Create,
+  Login,
+  List,
+  Portfolio,
+  Cashflow,
+} from './routes'
 import { NavBar } from './components'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
@@ -40,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: '/portfolio',
         element: <Portfolio />,
+      },
+      {
+        path: '/cashflow',
+        element: <Cashflow />,
       },
     ],
   },

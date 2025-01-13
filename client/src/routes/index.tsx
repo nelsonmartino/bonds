@@ -5,5 +5,6 @@ import Create from './Create/Create'
 import Login from './Login/Login'
 import List from './List/List'
 import Portfolio from './Portfolio/Portfolio'
+import Cashflow from './Portfolio/Cashflow'
 
-export { Landing, Bonds, Detail, Create, Login, List, Portfolio }
+export { Landing, Bonds, Detail, Create, Login, List, Portfolio, Cashflow }

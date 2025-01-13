@@ -58,3 +58,9 @@ export interface loggedUser {
   token: string
   name: string
 }
+
+export interface cashflow {
+  tickerARG: string
+  date: Date
+  eventCashflow: number
+}

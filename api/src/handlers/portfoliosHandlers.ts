@@ -3,6 +3,7 @@ import {
   postPortfolio,
   getPortfoliosByEmail,
   deletePortfolio,
+  getCashflowByEmail,
 } from '../controllers/portfoliosControllers'
 import { Portfolio } from '../types'
 
@@ -12,8 +13,12 @@ export const getPortfoliosHandler = async (
 ) => {
   const { email } = req.query
   try {
-    const userPortfolio = await getPortfoliosByEmail(email)
-    res.status(200).json(userPortfolio)
+    if (email) {
+      const userPortfolio = await getPortfoliosByEmail(email)
+      res.status(200).json(userPortfolio)
+    } else {
+      res.status(400).json({ message: 'Email not provided' })
+    }
   } catch (error) {
     res.status(400).json({ message: error })
   }
@@ -42,5 +47,22 @@ export const deletePortfolioHandler = async (
     res.status(200).json(newPortfolio)
   } catch (error) {
     res.status(400).json(error)
+  }
+}
+
+export const getCashflowHandler = async (
+  req: Request<{}, {}, {}, { email: string }>,
+  res: Response
+) => {
+  const { email } = req.query
+  try {
+    if (email) {
+      const userCashflow = await getCashflowByEmail(email)
+      res.status(200).json(userCashflow)
+    } else {
+      res.status(400).json({ message: 'Email not provided' })
+    }
+  } catch (error) {
+    res.status(400).json({ message: error })
   }
 }
