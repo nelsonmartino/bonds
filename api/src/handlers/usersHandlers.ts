@@ -3,7 +3,9 @@ import {
   getUsers,
   getUserByEmail,
   loadUsers,
+  postUser,
 } from '../controllers/usersControllers'
+import { User } from '../types'
 
 export const getUsersHandler = async (req: Request, res: Response) => {
   if (req.body.user.category != 'admin') {
@@ -28,6 +30,20 @@ export const loadUsersHandler = async (_req: Request, res: Response) => {
   try {
     const createUsers = await loadUsers()
     res.status(200).json(createUsers)
+  } catch (error) {
+    res.status(400).json(error)
+  }
+}
+
+export const postUserHandler = async (
+  req: Request<{}, {}, { user: User }, {}>,
+  res: Response
+) => {
+  try {
+    const { user } = req.body
+
+    await postUser(user)
+    res.status(200).json({ message: 'User created' })
   } catch (error) {
     res.status(400).json(error)
   }

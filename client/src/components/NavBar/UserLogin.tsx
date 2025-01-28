@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { setLogin, setLogout } from '../../redux/loginSlice'
+import { useNavigate } from 'react-router-dom'
 
 // interface LogedUser {
 //   name: string
@@ -14,6 +15,8 @@ const UserLogin = () => {
   const { login, name } = useAppSelector((state) => state.login)
 
   const dispatch = useAppDispatch()
+
+  const navigate = useNavigate()
 
   // const [user, setUser] = useState<LogedUser>({
   //   name: '',
@@ -35,6 +38,7 @@ const UserLogin = () => {
   const logoutHandler = () => {
     dispatch(setLogout())
     localStorage.removeItem('loggedUser')
+    navigate('/')
   }
 
   return (

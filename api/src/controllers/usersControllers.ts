@@ -1,6 +1,7 @@
 import usersEntries from '../../utils/users.json'
 import { User } from '../types'
 import { PrismaClient } from '@prisma/client'
+import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
@@ -17,8 +18,19 @@ export const getUserByEmail = async (email: string) => {
 }
 
 export const loadUsers = async () => {
-  const newUsers = await prisma.user.createMany({ data: usersJson })
+  const hashedPasswordUsers = await Promise.all(
+    usersJson.map(async (user) => {
+      const hashedPassword = await bcrypt.hash(user.password, 5)
+      return { ...user, password: hashedPassword }
+    })
+  )
+
+  const newUsers = await prisma.user.createMany({ data: hashedPasswordUsers })
   return newUsers
 }
 
-export const postUser = () => {}
+export const postUser = async (user: User) => {
+  const hashedPassword = await bcrypt.hash(user.password, 5)
+  await prisma.user.create({ data: { ...user, password: hashedPassword } })
+  return 'User created'
+}
