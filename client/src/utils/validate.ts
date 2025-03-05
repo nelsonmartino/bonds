@@ -102,11 +102,36 @@ export const validate = (form: Partial<Bond>) => {
   return errors
 }
 
+export const validateName = (name: string) => {
+  const nameRegex = /^.{4,}$/
+  if (!name.match(nameRegex)) {
+    return ''
+  }
+  return 'invisible'
+}
+
 export const validateEmail = (email: string) => {
-  // const error = { visibility: false }
   const emailRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
   if (!email.match(emailRegex)) {
+    return ''
+  }
+  return 'invisible'
+}
+
+export const validatePassword = (password: string) => {
+  const passwordRegex = /^.{6,}$/
+  if (!password.match(passwordRegex)) {
+    return ''
+  }
+  return 'invisible'
+}
+
+export const validateRepeatPassword = (
+  password: string,
+  repeatPassword: string
+) => {
+  if (password !== repeatPassword) {
     return ''
   }
   return 'invisible'

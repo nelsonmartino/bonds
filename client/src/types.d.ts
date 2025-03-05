@@ -43,6 +43,12 @@ export interface User {
   password: string
 }
 
+export interface Regist extends User {
+  name: string
+  surname: string
+  repeatPassword: string
+}
+
 export interface ApiPortfolio {
   qty: number
   bond: Partial<Bond>

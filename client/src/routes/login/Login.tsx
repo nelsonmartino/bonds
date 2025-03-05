@@ -18,11 +18,7 @@ function Login() {
 
   const [hideError, setHideError] = useState<string>('invisible')
 
-  const changeHandler = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const property = e.target.name
     const value = e.target.value
     setForm({ ...form, [property]: value })

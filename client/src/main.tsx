@@ -18,6 +18,7 @@ import {
 import { NavBar } from './components'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
+import Register from './routes/Register/Register'
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: '/cashflow',
         element: <Cashflow />,
+      },
+      {
+        path: '/register',
+        element: <Register />,
       },
     ],
   },
